@@ -1,0 +1,110 @@
+Kafka set up:-
+
+1. Download apache kafka.
+2. 
+
+In power shell 1 :-  PS C:\kafka\bin\windows> .\zookeeper-server-start.bat C:\kafka\config\zookeeper.properties
+
+In power shell 2 :- PS C:\kafka\bin\windows> .\kafka-server-start.bat C:\kafka\config\server.properties
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+create all neccessary topics:-
+
+PS C:\Users\GANESH MIRISKER> cd ..
+PS C:\Users> cd ..
+PS C:\> cd kafka\bin\windows
+PS C:\kafka\bin\windows> .\kafka-topics.bat --bootstrap-server localhost:9092 --create --topic USER_CREATED
+WARNING: Due to limitations in metric names, topics with a period ('.') or underscore ('_') could collide. To avoid issues it is best to use either, but not both.
+Created topic USER_CREATED.
+PS C:\kafka\bin\windows> .\kafka-topics.bat --bootstrap-server localhost:9092 --create --topic USER_DELETED
+WARNING: Due to limitations in metric names, topics with a period ('.') or underscore ('_') could collide. To avoid issues it is best to use either, but not both.
+Created topic USER_DELETED.
+PS C:\kafka\bin\windows> .\kafka-topics.bat --bootstrap-server localhost:9092 --create --topic WALLET_UPDATE
+WARNING: Due to limitations in metric names, topics with a period ('.') or underscore ('_') could collide. To avoid issues it is best to use either, but not both.
+Created topic WALLET_UPDATE.
+PS C:\kafka\bin\windows> .\kafka-topics.bat --bootstrap-server localhost:9092 --create --topic TRANS_CREATED
+WARNING: Due to limitations in metric names, topics with a period ('.') or underscore ('_') could collide. To avoid issues it is best to use either, but not both.
+Created topic TRANS_CREATED.
+PS C:\kafka\bin\windows> .\kafka-topics.bat --bootstrap-server localhost:9092 --create --topic TRANSACTION
+Created topic TRANSACTION.
+PS C:\kafka\bin\windows> .\kafka-topics.bat --bootstrap-server localhost:9092 --create --topic NOTIFICATION
+Created topic NOTIFICATION.
+PS C:\kafka\bin\windows>
+
+-------------------------------------
+
+Prerequisite for EmailServices integration:- 
+STEPS:-
+
+
+1. Open Gmail account ment for project.
+
+2. click on profile.
+
+3. click on "Manage User account".
+
+4. Search "2fa"     (enable the 2-factor authentication first)
+
+5. Search "App Passwords"
+	5a. Select App Enter : EwalletEmail
+        5b. click on "GENERATE" button
+	5c. copy the One Time Password
+
+6. create "[MailConfiguration.java]" 
+
+
+
+
+
+-------------------------------------
+
+APIs for Testing:-
+
+---------------
+
+create new user:- localhost:8001/user
+body:- 
+{
+    "userName" : "your username",
+    "email" : "username@gmail.com",
+    "phoneNumber" : "992382396",
+    "password" : "Ewallet@00123"
+}
+
+body:-
+{
+    "userName" : "another username",
+    "email" : "anotherusername@gmail.com",
+    "phoneNumber" : "992382396",
+    "password" : "Ewallet@00123"
+}
+
+---------------
+
+GET -  Get User Details along with wallet :- localhost:8001/user/1
+
+---------------
+
+POST - add balance to self wallet - localhost:8001/user/2/wallet/transfer
+
+{
+    "receiverId" : "0",
+    "amount" : 1000.0,
+    "description" : "wallet load"
+}
+
+--------------
+
+POST - send to valid user's wallet - localhost:8001/user/2/transfer
+
+{
+    "receiverId" : "1",
+    "amount" : 1000.0,
+    "description" : "wallet load"
+}
+
+
